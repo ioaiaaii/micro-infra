@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bootstrap
+  namespace: platform
+spec:
+  project: bootstrap
+  source:
+    repoURL: https://github.com/ioaiaaii/micro-infra.git
+    targetRevision: HEAD
+    path: meta-charts/argocd-apps
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

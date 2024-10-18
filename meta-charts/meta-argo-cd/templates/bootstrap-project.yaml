@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: bootstrap
+  namespace: platform
+  annotations:
+    "helm.sh/resource-policy": keep
+spec:
+  description: Bootstrap ArgoCD-Apps
+  sourceRepos:
+    - '*' # Allows all repositories, can be adjusted as needed
+  destinations:
+    - namespace: '*' # Allows all namespaces, can be adjusted as needed
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*' # Allows all group/kind combinations for cluster-level resources
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*' # Allows all group/kind combinations for namespaced resources
+      kind: '*'
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
