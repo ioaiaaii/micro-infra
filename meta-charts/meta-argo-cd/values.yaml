@@ -1,7 +1,4 @@
 argo-cd:
-  redis:
-    enabled:
-      false
   dex:
     enabled: false    
   server:
@@ -14,10 +11,10 @@ argo-cd:
     params:
       server.insecure: true
     repositories:
-      local-cluster-repo:
-        name: local-cluster
+      micro-helm-repo:
+        name: micro-infra-charts
         type: git
-        url: https://github.com/ioaiaaii/local-cluster.git
+        url: https://github.com/ioaiaaii/micro-infra.git
       argo-helm-repo:
         name: argo-helm
         type: helm
@@ -26,3 +23,5 @@ argo-cd:
         name: prometheus-community
         type: git
         url: https://github.com/prometheus-community/helm-charts.git
+
+
