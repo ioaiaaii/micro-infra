@@ -17,6 +17,15 @@ locals {
 
 terraform {
   source = "tfr://registry.terraform.io/terraform-google-modules/network/google?version=9.3.0"
+
+  # before_hook "security_scan" {
+  #   commands = ["plan", "apply", "destroy"]
+  #   execute = [
+  #     "sh", "-c",
+  #     "terragrunt plan -out plan.out && terragrunt show -json plan.out > plan.json && trivy config plan.json --format json --output trivy-report.json"
+  #   ]
+  # }
+
 }
 
 inputs = {
@@ -34,15 +43,15 @@ inputs = {
       subnet_name           = "workload"  # Name of the subnet
       subnet_ip             = "10.10.0.0/20"  # /20 CIDR block provides 4096 IP range for the primary subnet
       subnet_region         = local.region          # Region where the subnet will be created
-      subnet_private_access = true  # Enable private access to Google APIs without public IPs
-      enable_flow_logs      = false  # Enable VPC flow logs for traffic visibility
+      subnet_private_access = "true"
+      subnet_flow_logs      = "false"
     },
     {
       subnet_name           = "shared"  # Name of the subnet
       subnet_ip             = "10.0.1.0/29"  # /29 CIDR block provides 6 IP range for the primary subnet
       subnet_region         = local.region           # Region where the subnet will be created
-      subnet_private_access = true  # Enable private access to Google APIs without public IPs
-      enable_flow_logs      = false  # Enable VPC flow logs for traffic visibility
+      subnet_private_access = "true"  # Enable private access to Google APIs without public IPs
+      subnet_flow_logs      = "false"  # Enable VPC flow logs for traffic visibility
     }    
   ]
   # Define secondary IP ranges for Pods and Services (used in GKE)

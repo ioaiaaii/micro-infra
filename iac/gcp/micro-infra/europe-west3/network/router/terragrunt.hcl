@@ -32,8 +32,7 @@ inputs = {
 
   nats = [{
     name                               = "micro-nat-gateway"
-    source_subnetwork_ip_
-    ranges_to_nat = "LIST_OF_SUBNETWORKS"
+    source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
     subnetworks = [
       {
         name                     = dependency.vpc.outputs.subnets["${local.region}/workload"].id
