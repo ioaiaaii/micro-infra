@@ -1,6 +1,5 @@
 argocd-apps:
-  projects:
-  - name: observability
+  observability:
     namespace: platform
     additionalLabels: {}
     additionalAnnotations:
@@ -20,20 +19,42 @@ argocd-apps:
       - group: '*'
         kind: '*'
   applications:
-    - name: observability
+    guestbook:
       namespace: platform
-      destination:
-        namespace: observability
-        server: https://kubernetes.default.svc
-        createNamespace: true        
+      additionalLabels: {}
+      additionalAnnotations: {}
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
       project: observability
       source:
-        path: gitops/observability
         repoURL: https://github.com/ioaiaaii/micro-infra.git
         targetRevision: HEAD
+        path: gitops/observability
         directory:
           recurse: true
+      # ArgoCD v2.6 or later
+      # sources:
+      # - chart: elasticsearch
+      #   repoURL: https://helm.elastic.co
+      #   targetRevision: 8.5.1
+      # - repoURL: https://github.com/argoproj/argocd-example-apps.git
+      #   path: guestbook
+      #   targetRevision: HEAD
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: observability
       syncPolicy:
         automated:
-          selfHeal: true
           prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+      revisionHistoryLimit: null
+      ignoreDifferences:
+      - group: apps
+        kind: Deployment
+        jsonPointers:
+        - /spec/replicas
+      info:
+      - name: url
+        value: https://argoproj.github.io/
