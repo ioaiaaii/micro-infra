@@ -26,14 +26,13 @@ argocd-apps:
         namespace: observability
         server: https://kubernetes.default.svc
         createNamespace: true        
-      project: argocd
+      project: observability
       source:
         path: gitops/observability
-        repoURL: https://github.com/ioaiaaii/local-cluster.git
+        repoURL: https://github.com/ioaiaaii/micro-infra.git
         targetRevision: HEAD
         directory:
           recurse: true
-          jsonnet: {}
       syncPolicy:
         automated:
           selfHeal: true
