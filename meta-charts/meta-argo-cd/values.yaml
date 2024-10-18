@@ -1,0 +1,28 @@
+argo-cd:
+  redis:
+    enabled:
+      false
+  dex:
+    enabled: false    
+  server:
+    service:
+      annotations:
+        cloud.google.com/neg: '{"ingress": true}'
+        cloud.google.com/backend-config: '{"ports": {"http":"argocd-server"}}'        
+      type: LoadBalancer
+  configs:
+    params:
+      server.insecure: true
+    repositories:
+      local-cluster-repo:
+        name: local-cluster
+        type: git
+        url: https://github.com/ioaiaaii/local-cluster.git
+      argo-helm-repo:
+        name: argo-helm
+        type: helm
+        url: https://argoproj.github.io/argo-helm
+      prometheus-community-repo:
+        name: prometheus-community
+        type: git
+        url: https://github.com/prometheus-community/helm-charts.git

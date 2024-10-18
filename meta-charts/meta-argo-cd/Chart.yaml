@@ -1,0 +1,10 @@
+apiVersion: v2
+name: meta-argo-cd
+description: A meta-chart for managing Argo CD installations with custom configurations
+version: 1.0.0
+appVersion: v2.12.5
+
+dependencies:
+  - name: argo-cd
+    version: "7.6.11"
+    repository: "https://argoproj.github.io/argo-helm"
