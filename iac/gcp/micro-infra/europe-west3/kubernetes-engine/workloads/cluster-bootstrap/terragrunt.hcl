@@ -10,12 +10,15 @@ locals {
   release_name  = "argo-cd"
   namespace     = "platform"
   chart_path    = "../../../../../../../meta-charts/meta-argo-cd" # Replace with your actual chart path or Helm repository name
+  templates_dir = "${local.chart_path}/templates"
   values_file   = "${local.chart_path}/values.yaml"
   chart_file    = "${local.chart_path}/Chart.yaml"
 
   # Generate SHAs for Chart.yaml and values.yaml separately
   chart_sha     = filesha256(local.chart_file)
   values_sha    = filesha256(local.values_file)
+  combined_templates_sha = sha256(join("", [for f in fileset(local.templates_dir, "**/*"): filesha256("${local.templates_dir}/${f}")]))
+
 }
 
 generate "helm_upgrade" {
@@ -26,6 +29,7 @@ resource "null_resource" "helm_upgrade" {
   triggers = {
     chart_sha  = "${local.chart_sha}"
     values_sha = "${local.values_sha}"
+    templates_sha = "${local.combined_templates_sha}"
   }
 
   provisioner "local-exec" {
