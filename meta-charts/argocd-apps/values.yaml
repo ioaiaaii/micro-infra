@@ -1,25 +1,26 @@
 argocd-apps:
-  observability:
-    namespace: platform
-    additionalLabels: {}
-    additionalAnnotations:
-      "helm.sh/resource-policy": keep
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    description: Observability Services
-    sourceRepos:
-    - '*'
-    destinations:
-    - namespace: '*'
-      server: https://kubernetes.default.svc
-    clusterResourceWhitelist:
-      - group: '*'
-        kind: '*'
-    namespaceResourceWhitelist:
-      - group: '*'
-        kind: '*'
+  projects:
+    observability:
+      namespace: platform
+      additionalLabels: {}
+      additionalAnnotations:
+        "helm.sh/resource-policy": keep
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+      description: Observability Services
+      sourceRepos:
+      - '*'
+      destinations:
+      - namespace: '*'
+        server: https://kubernetes.default.svc
+      clusterResourceWhitelist:
+        - group: '*'
+          kind: '*'
+      namespaceResourceWhitelist:
+        - group: '*'
+          kind: '*'
   applications:
-    guestbook:
+    observability:
       namespace: platform
       additionalLabels: {}
       additionalAnnotations: {}
