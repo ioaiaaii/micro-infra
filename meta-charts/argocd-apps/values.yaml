@@ -19,3 +19,22 @@ argocd-apps:
     namespaceResourceWhitelist:
       - group: '*'
         kind: '*'
+  applications:
+    - name: observability
+      namespace: platform
+      destination:
+        namespace: observability
+        server: https://kubernetes.default.svc
+        createNamespace: true        
+      project: argocd
+      source:
+        path: gitops/observability
+        repoURL: https://github.com/ioaiaaii/local-cluster.git
+        targetRevision: HEAD
+        directory:
+          recurse: true
+          jsonnet: {}
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
