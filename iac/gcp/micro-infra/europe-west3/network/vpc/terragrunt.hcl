@@ -17,15 +17,6 @@ locals {
 
 terraform {
   source = "tfr://registry.terraform.io/terraform-google-modules/network/google?version=9.3.0"
-
-  # before_hook "security_scan" {
-  #   commands = ["plan", "apply", "destroy"]
-  #   execute = [
-  #     "sh", "-c",
-  #     "terragrunt plan -out plan.out && terragrunt show -json plan.out > plan.json && trivy config plan.json --format json --output trivy-report.json"
-  #   ]
-  # }
-
 }
 
 inputs = {

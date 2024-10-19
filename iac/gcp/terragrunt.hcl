@@ -35,6 +35,18 @@ remote_state {
   }
 }
 
+terraform {
+  # Delegate and Enforce security scanning everywhere
+  before_hook "security_scan" {
+    commands = ["plan", "apply", "destroy"]
+    # working_dir = "."
+    execute = [
+      "bash", "-c",
+      "terraform plan -out tmp_plan.out &> /dev/null && terraform show -json tmp_plan.out > tmp_plan.json && trivy config tmp_plan.json && rm tmp_plan.json && rm tmp_plan.out"
+    ]
+  }
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # GLOBAL PARAMETERS
 # These variables apply to all configurations in this subfolder. These are automatically merged into the child
