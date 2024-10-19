@@ -51,7 +51,7 @@ inputs = {
   ip_range_pods      = "pod"  # Pod IP range for the GKE cluster
   ip_range_services  = "svc" # Service IP range for the GKE cluster
   master_ipv4_cidr_block = "172.16.0.0/28" # Control plane (master) IP range
-  
+  disable_legacy_metadata_endpoints = true
   deletion_protection = false  # Disable deletion protection for easier cluster deletion
 
   # Security Improvements
@@ -62,7 +62,7 @@ inputs = {
   add_master_webhook_firewall_rules = true
   add_shadow_firewall_rules         = true
   shadow_firewall_rules_log_config = null # to save some $ on logs
-
+  network_policy             = true
   firewall_inbound_ports            = ["8443", "9443", "15017"] #List of TCP ports for admission/webhook controllers
 
   # https://github.com/terraform-google-modules/terraform-google-kubernetes-engine/pull/1894    
@@ -75,6 +75,15 @@ inputs = {
   logging_enabled_components = "[]"
   logging_service = "none"
 
+  cluster_resource_labels = {
+    env = "live"
+  }
+
+  node_pools_resource_labels = {
+    all = {
+      env = "live"
+    }
+  }
   # Master Authorized Networks
   # Only allow access to the control plane from the subnetwork's CIDR block
   master_authorized_networks = [

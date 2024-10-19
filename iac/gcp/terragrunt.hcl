@@ -37,7 +37,7 @@ remote_state {
 
 terraform {
   # Delegate and Enforce security scanning everywhere
-  before_hook "security_scan" {
+  after_hook "security_scan" {
     commands = ["plan", "apply", "destroy"]
     # working_dir = "."
     execute = [
