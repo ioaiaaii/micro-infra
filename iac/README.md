@@ -79,5 +79,13 @@ gcloud container clusters get-credentials ioaiaaii --location europe-west3-a --i
 gcloud billing accounts list
 gcloud services enable iap.googleapis.com
 
+gcloud compute instances start "bastion-vm" --zone "europe-west3-a"
+gcloud compute ssh --zone "europe-west3-a" "bastion-vm" --tunnel-through-iap --project "micro-infra" --  -L 8888:localhost:8888 -N -q -f
 
-gcloud compute ssh --zone "europe-west3-a" "ioaiaaii-bastion" --tunnel-through-iap --project "green-calling-438408-p4"   --  -L 8888:localhost:8888 -N -q -f
+export HTTPS_PROXY=localhost:8888
+
+
+
+
+
+gcloud compute instances stop "bastion-vm" --zone "europe-west3-a"
