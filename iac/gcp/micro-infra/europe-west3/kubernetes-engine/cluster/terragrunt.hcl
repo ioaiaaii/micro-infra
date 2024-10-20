@@ -7,7 +7,6 @@ locals {
   project = include.root.locals.project
   region  = include.root.locals.region
   zones  = include.root.locals.zones
-  kubernetes_version = "1.30"
 }
 
 # terragrunt output --terragrunt-config terragrunt.hcl
@@ -109,7 +108,7 @@ inputs = {
       machine_type       = "e2-small"  # Use cost-effective machine types
       spot               = true  # Use spot (preemptible) instances for cost savings
       min_count          = 1  # Minimum number of nodes in the pool
-      max_count          = 2  # Maximum number of nodes in the pool
+      max_count          = 4  # Maximum number of nodes in the pool
       initial_node_count = 1  # Initial number of nodes at cluster creation
       disk_size_gb       = 20  # Disk size for each node
       enable_secure_boot  = true  # Enable secure boot to ensure the node's integrity
