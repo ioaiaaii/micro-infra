@@ -1,26 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kube-prometheus-stack-crds
+  name: kube-prometheus-stack
   namespace: platform
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   destination:
     namespace: observability
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
   project: observability
   source:
     repoURL: 'https://github.com/ioaiaaii/micro-infra.git'
-    path: meta-charts/kube-prometheus-stack/crds
+    path: meta-charts/kube-prometheus-stack
     targetRevision: HEAD
-    directory:
-      recurse: true
+    helm:
+      skipCrds: true
+      valueFiles:
+        - values.yaml
   syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-      - Replace=true
-      - ServerSideApply=true
     automated:
-      prune: true
       selfHeal: true
+      prune: true
