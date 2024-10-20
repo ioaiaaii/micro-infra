@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kube-prometheus-stack-crds
-  namespace: observability
+  namespace: platform
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
