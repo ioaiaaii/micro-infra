@@ -20,7 +20,7 @@ argocd-apps:
         - group: '*'
           kind: '*'
     infrastructure:
-      namespace: infrastructure
+      namespace: platform
       additionalLabels: {}
       additionalAnnotations:
         "helm.sh/resource-policy": keep
