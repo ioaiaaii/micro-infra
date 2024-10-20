@@ -4,23 +4,22 @@ metadata:
   name: cert-manager
   namespace: infrastructure
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   destination:
     namespace: infrastructure
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
   project: infrastructure
   source:
     repoURL: 'https://github.com/ioaiaaii/micro-infra.git'
     path: meta-charts/cert-manager
     targetRevision: HEAD
-    directory:
-      recurse: true
+    helm:
+      valueFiles:
+        - values.yaml
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-      - Replace=true
-      - ServerSideApply=true
     automated:
       prune: true
       selfHeal: true
