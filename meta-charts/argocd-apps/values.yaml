@@ -19,6 +19,25 @@ argocd-apps:
       namespaceResourceWhitelist:
         - group: '*'
           kind: '*'
+    infrastructure:
+      namespace: platform
+      additionalLabels: {}
+      additionalAnnotations:
+        "helm.sh/resource-policy": keep
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+      description: infrastructure Services
+      sourceRepos:
+      - '*'
+      destinations:
+      - namespace: '*'
+        server: https://kubernetes.default.svc
+      clusterResourceWhitelist:
+        - group: '*'
+          kind: '*'
+      namespaceResourceWhitelist:
+        - group: '*'
+          kind: '*'          
   applications:
     observability:
       namespace: platform
@@ -32,7 +51,7 @@ argocd-apps:
         targetRevision: HEAD
         path: gitops/observability
         directory:
-          recurse: true
+          recurse: true          
       # ArgoCD v2.6 or later
       # sources:
       # - chart: elasticsearch
@@ -59,3 +78,26 @@ argocd-apps:
       info:
       - name: url
         value: https://argoproj.github.io/
+    infrastructure:
+      namespace: platform
+      additionalLabels: {}
+      additionalAnnotations: {}
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+      project: infrastructure
+      source:
+        repoURL: https://github.com/ioaiaaii/micro-infra.git
+        targetRevision: HEAD
+        path: gitops/infrastructure
+        directory:
+          recurse: true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: infrastructure
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+      revisionHistoryLimit: 2
