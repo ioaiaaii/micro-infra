@@ -3,11 +3,8 @@ cluster-autoscaler:
   autoDiscovery:
     clusterName: ioaiaaii
   autoscalingGroupsnamePrefix:
-    # The name prefix of of the GCE managed instance groups
-    # this will be different in your case and in general follows this pattern
-    # gke-$CLUSTER_NAME (in my case cluster name is no-autoscaler)
     - name: workers-base-pool
-      minSize: 1
+      minSize: 2
       maxSize: 3
 
   extraArgs:
@@ -20,7 +17,7 @@ cluster-autoscaler:
     # leader-elect-resource-lock: endpoints
     # skip-nodes-with-local-storage: true
     # expander: random
-    # balance-similar-node-groups: true
+    balance-similar-node-groups: true
     # min-replica-count: 0
     scale-down-enabled: true    
     scale-down-utilization-threshold: 0.5
