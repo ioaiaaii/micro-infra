@@ -107,14 +107,13 @@ inputs = {
 
   # Define a custom node pool for workers
   node_pools = [{
+      autoscaling = false
       version = dependency.data.outputs.latest_gke_node_version  # Specify the Kubernetes version for the nodes
       auto_upgrade       = false   # Enable auto-upgrades for the node pool
       name               = "workers-base-pool"  # Name of the node pool
       machine_type       = "e2-small"  # Use cost-effective machine types
       spot               = true  # Use spot (preemptible) instances for cost savings
-      min_count          = 1  # Minimum number of nodes in the pool
-      max_count          = 4  # Maximum number of nodes in the pool
-      initial_node_count = 1  # Initial number of nodes at cluster creation
+      node_count         = 2  # Minimum number of nodes in the pool
       disk_size_gb       = 20  # Disk size for each node
       enable_secure_boot  = true  # Enable secure boot to ensure the node's integrity
   }]

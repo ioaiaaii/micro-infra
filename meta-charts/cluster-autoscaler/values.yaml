@@ -2,6 +2,14 @@ cluster-autoscaler:
   cloudProvider: gce
   autoDiscovery:
     clusterName: ioaiaaii
+  autoscalingGroupsnamePrefix:
+    # The name prefix of of the GCE managed instance groups
+    # this will be different in your case and in general follows this pattern
+    # gke-$CLUSTER_NAME (in my case cluster name is no-autoscaler)
+    - name: workers-base-pool
+      minSize: 1
+      maxSize: 3
+
   extraArgs:
     logtostderr: true
     stderrthreshold: info
