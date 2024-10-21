@@ -1,12 +1,6 @@
 argo-cd:
   dex:
-    enabled: false    
-  server:
-    service:
-      annotations:
-        cloud.google.com/neg: '{"ingress": true}'
-        cloud.google.com/backend-config: '{"ports": {"http":"argocd-server"}}'        
-      type: LoadBalancer
+    enabled: false
   configs:
     params:
       server.insecure: true
