@@ -8,8 +8,8 @@ cluster-autoscaler:
     v: 4
     # write-status-configmap: true
     # status-config-map-name: cluster-autoscaler-status
-    leader-elect: true
-    leader-elect-resource-lock: endpoints
+    leader-elect: false
+    # leader-elect-resource-lock: endpoints
     # skip-nodes-with-local-storage: true
     # expander: random
     # balance-similar-node-groups: true
