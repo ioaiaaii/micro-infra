@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: observability
   source:
-    repoURL: 'https://github.com/ioaiaaii/local-cluster.git'
+    repoURL: 'https://github.com/ioaiaaii/micro-cluster.git'
     path: meta-charts/kube-prometheus-stack
     targetRevision: HEAD
     helm:
