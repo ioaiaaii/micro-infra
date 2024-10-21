@@ -1,0 +1,27 @@
+cluster-autoscaler:
+  cloudProvider: gce
+  autoDiscovery:
+    clusterName: ioaiaaii
+  autoscalingGroupsnamePrefix:
+    - name: gke-ioaiaaii-workers-base-pool
+      minSize: 1
+      maxSize: 4
+    - name: gke-ioaiaaii-infrastructure
+      minSize: 1
+      maxSize: 2
+  extraArgs:
+    leader-elect: false
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: dedicated
+            operator: In
+            values:
+            - infrastructure 
+  tolerations:
+    - effect: NoSchedule
+      key: dedicated
+      operator: Equal
+      value: infrastructure
