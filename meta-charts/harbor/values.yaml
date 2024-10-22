@@ -1,0 +1,45 @@
+global:
+  # Define reusable blocks, since chart not supports
+  globalAffinity: &globalAffinity
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: dedicated
+            operator: In
+            values:
+            - infrastructure      
+  globalTolerations: &globalTolerations
+    - effect: NoSchedule
+      key: dedicated
+      operator: Equal
+      value: infrastructure
+
+harbor:
+  expose:
+    type: clusterIP
+
+  nginx:
+    tolerations: *globalTolerations
+    affinity: *globalAffinity
+  portat:
+    tolerations: *globalTolerations
+    affinity: *globalAffinity
+  core:
+    tolerations: *globalTolerations
+    affinity: *globalAffinity
+  jobservice:
+    tolerations: *globalTolerations
+    affinity: *globalAffinity
+  registry:
+    tolerations: *globalTolerations
+    affinity: *globalAffinity
+  database:
+    internal:
+      tolerations: *globalTolerations
+      affinity: *globalAffinity           
+  redis:
+    internal:
+      tolerations: *globalTolerations
+      affinity: *globalAffinity
+
