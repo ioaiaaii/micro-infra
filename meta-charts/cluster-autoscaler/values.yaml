@@ -11,6 +11,7 @@ cluster-autoscaler:
       maxSize: 2
   extraArgs:
     leader-elect: false
+    scale-down-utilization-threshold: 0.6
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
