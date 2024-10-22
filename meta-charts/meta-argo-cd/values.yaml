@@ -1,4 +1,30 @@
 argo-cd:
+  global:
+    networkPolicy:
+      create: false
+      defaultDenyIngress: false
+    # priorityClassName: system-cluster-critical
+    tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+        value: infrastructure
+    # Default affinity preset for all components
+    affinity:
+      # -- Default pod anti-affinity rules. Either: `none`, `soft` or `hard`
+      podAntiAffinity: soft
+      # Node affinity rules
+      nodeAffinity:
+        # -- Default node affinity rules. Either: `none`, `soft` or `hard`
+        type: hard
+        matchExpressions:
+          - key: dedicated
+            operator: In
+            values:
+            - infrastructure 
+    logging:
+      format: json
+      level: error    
   dex:
     enabled: false
   configs:
@@ -17,5 +43,3 @@ argo-cd:
         name: prometheus-community
         type: git
         url: https://github.com/prometheus-community/helm-charts.git
-
-

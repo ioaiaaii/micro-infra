@@ -104,20 +104,52 @@ inputs = {
 
   # Node pool settings
   remove_default_node_pool = true  # Remove the default node pool to define custom node pools
-
-  # Define a custom node pool for workers
-  node_pools = [{
+  node_pools = [
+    {
+      name               = "workers-base-pool"  # Name of the node pool
       autoscaling = false
       version = dependency.data.outputs.latest_gke_node_version  # Specify the Kubernetes version for the nodes
       auto_upgrade       = false   # Enable auto-upgrades for the node pool
-      name               = "workers-base-pool"  # Name of the node pool
       machine_type       = "e2-small"  # Use cost-effective machine types
       spot               = true  # Use spot (preemptible) instances for cost savings
       node_count         = 2  # Minimum number of nodes in the pool
       disk_size_gb       = 20  # Disk size for each node
       enable_secure_boot  = true  # Enable secure boot to ensure the node's integrity
-  }]
+      initial_node_count = 1
+    },
+    {
+      name               = "infrastructure"  # Name of the node pool
+      initial_node_count = 1
+      autoscaling        = false
+      version = dependency.data.outputs.latest_gke_node_version  # Specify the Kubernetes version for the nodes
+      auto_upgrade       = false   # Enable auto-upgrades for the node pool
+      machine_type       = "e2-medium"  # Use cost-effective machine types
+      spot               = true  # Use spot (preemptible) instances for cost savings
+      disk_size_gb       = 20  # Disk size for each node
+      enable_secure_boot  = true  # Enable secure boot to ensure the node's integrity
+    }
+  ]
 
+  node_pools_taints = {
+    all = []
+
+    infrastructure = [
+      {
+        key    = "dedicated"
+        value  = "infrastructure"
+        effect = "NO_SCHEDULE"
+      },
+    ]
+  }
+
+  node_pools_labels = {
+    all = {}
+
+    infrastructure = {
+      dedicated = "infrastructure"
+    }
+  }
+ 
   # node_pools_tags = {
   #   all = [ "egress-inet", "allow-google-apis" ]
   # }
