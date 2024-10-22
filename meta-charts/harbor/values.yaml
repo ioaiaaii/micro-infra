@@ -16,9 +16,8 @@ global:
       value: infrastructure
 
 harbor:
-  expose:
+  service:
     type: clusterIP
-
   nginx:
     tolerations: *globalTolerations
     affinity: *globalAffinity
