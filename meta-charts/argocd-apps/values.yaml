@@ -19,6 +19,22 @@ argocd-apps:
       namespaceResourceWhitelist:
         - group: '*'
           kind: '*'
+    products:
+      namespace: platform
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+      description: Domain Services
+      sourceRepos:
+      - '*'
+      destinations:
+      - namespace: '*'
+        server: https://kubernetes.default.svc
+      clusterResourceWhitelist:
+        - group: '*'
+          kind: '*'
+      namespaceResourceWhitelist:
+        - group: '*'
+          kind: '*'          
     infrastructure:
       namespace: platform
       additionalLabels: {}
@@ -89,6 +105,29 @@ argocd-apps:
         repoURL: https://github.com/ioaiaaii/micro-infra.git
         targetRevision: HEAD
         path: gitops/infrastructure
+        directory:
+          recurse: true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: infrastructure
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+      revisionHistoryLimit: 2
+    products:
+      namespace: platform
+      additionalLabels: {}
+      additionalAnnotations: {}
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+      project: products
+      source:
+        repoURL: https://github.com/ioaiaaii/micro-infra.git
+        targetRevision: HEAD
+        path: gitops/domain
         directory:
           recurse: true
       destination:
