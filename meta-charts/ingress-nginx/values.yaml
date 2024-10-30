@@ -9,6 +9,5 @@ ingress-nginx:
       certManager:
         enabled: true
     config:
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true" 
       nginx.ingress.kubernetes.io/limit-rps: "5" 
-      nginx.ingress.kubernetes.io/limit-rpm: "10"
+      nginx.ingress.kubernetes.io/limit-rpm: "100"
