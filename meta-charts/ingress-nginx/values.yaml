@@ -1,0 +1,10 @@
+ingress-nginx:
+  controller:
+    service:
+      annotations: 
+        cloud.google.com/network-tier: Standard
+    autoscaling:
+      enabled: true
+    admissionWebhooks:
+      certManager:
+        enabled: true
