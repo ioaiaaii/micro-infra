@@ -13,7 +13,6 @@ spec:
         repo: ioaiaaii.net
         labels:
         - preview
-        requeueAfterSeconds: 120
   template:
     metadata:
       name: 'ioaiaaii-{{.branch_slug}}-{{.number}}'
