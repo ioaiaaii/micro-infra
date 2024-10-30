@@ -5,9 +5,3 @@ ingress-nginx:
         cloud.google.com/network-tier: Standard
     autoscaling:
       enabled: true
-    admissionWebhooks:
-      certManager:
-        enabled: true
-    config:
-      nginx.ingress.kubernetes.io/limit-rps: "5" 
-      nginx.ingress.kubernetes.io/limit-rpm: "100"
