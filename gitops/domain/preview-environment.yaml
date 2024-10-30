@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ioaiaaii-preview
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - pullRequest:
+      github:
+        owner: ioaiaaii
+        repo: ioaiaaii.net
+        api: https://api.github.com
+        labels:
+        - preview
+      requeueAfterSeconds: 1800
+  template:
+    metadata:
+      name: 'ioaiaaii-{{.branch_slug}}-{{.number}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io      
+    spec:
+      source:
+        repoURL: https://github.com/ioaiaaii/ioaiaaii.net.git'
+        targetRevision: '{{.head_sha}}'
+        path: deploy/helm/ioaiaaii
+        helm:
+          parameters:
+          - name: "ioaiaaii.image.tag"
+            value: "{{.branch_slug}}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
+      project: products
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'ioaiaaii-{{.branch_slug}}-{{.number}}'
