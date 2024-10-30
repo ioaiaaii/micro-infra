@@ -39,6 +39,10 @@ argo-cd:
         name: argo-helm
         type: helm
         url: https://argoproj.github.io/argo-helm
+      products-ioaiaiii:
+        name: ioaiaiii.net
+        type: git
+        url: https://github.com/ioaiaaii/ioaiaaii.net.git
       prometheus-community-repo:
         name: prometheus-community
         type: git
