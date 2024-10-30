@@ -66,7 +66,7 @@ inputs = {
 
   # Add-ons
   http_load_balancing   = false
-  network_policy             = true
+  network_policy             = false
   monitoring_enable_managed_prometheus = false
   horizontal_pod_autoscaling = false
 
@@ -76,8 +76,7 @@ inputs = {
   monitoring_service = "none"
   monitoring_enabled_components = []
   logging_service = "none"
-  logging_enabled_components = "[]"
-
+  logging_enabled_components    = []
 
   cluster_resource_labels = {
     env = "live"
@@ -110,23 +109,27 @@ inputs = {
       autoscaling = false
       version = dependency.data.outputs.latest_gke_node_version  # Specify the Kubernetes version for the nodes
       auto_upgrade       = false   # Enable auto-upgrades for the node pool
-      machine_type       = "e2-small"  # Use cost-effective machine types
+      machine_type       = "e2-micro"  # Use cost-effective machine types
       spot               = true  # Use spot (preemptible) instances for cost savings
-      node_count         = 2  # Minimum number of nodes in the pool
-      disk_size_gb       = 20  # Disk size for each node
+      disk_size_gb       = 40  # Disk size for each node
       enable_secure_boot  = true  # Enable secure boot to ensure the node's integrity
       initial_node_count = 1
+      max_surge           = 2
+      max_unavailable     = 1
     },
     {
       name               = "infrastructure"  # Name of the node pool
-      initial_node_count = 1
+      node_count = 1
       autoscaling        = false
       version = dependency.data.outputs.latest_gke_node_version  # Specify the Kubernetes version for the nodes
       auto_upgrade       = false   # Enable auto-upgrades for the node pool
-      machine_type       = "e2-medium"  # Use cost-effective machine types
+      machine_type       = "e2-micro"  # Use cost-effective machine types
       spot               = true  # Use spot (preemptible) instances for cost savings
-      disk_size_gb       = 20  # Disk size for each node
+      disk_size_gb       = 40  # Disk size for each node
       enable_secure_boot  = true  # Enable secure boot to ensure the node's integrity
+      initial_node_count = 1
+      max_surge           = 2
+      max_unavailable     = 1      
     }
   ]
 
