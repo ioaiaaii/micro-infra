@@ -21,7 +21,7 @@ spec:
         - resources-finalizer.argocd.argoproj.io      
     spec:
       source:
-        repoURL: https://github.com/ioaiaaii/ioaiaaii.net.git'
+        repoURL: https://github.com/ioaiaaii/ioaiaaii.net.git
         targetRevision: '{{.head_sha}}'
         path: deploy/helm/ioaiaaii
         helm:
