@@ -25,8 +25,8 @@ spec:
         path: deploy/helm/ioaiaaii
         helm:
           parameters:
-          - name: "ioaiaaii.image.tag"
-            value: "{{.branch_slug}}"
+          - name: web.image.tag
+            value: '{{.branch_slug}}'
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
