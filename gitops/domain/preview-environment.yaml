@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: ioaiaaii-preview
+  namespace: platform
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
@@ -10,10 +11,9 @@ spec:
       github:
         owner: ioaiaaii
         repo: ioaiaaii.net
-        api: https://api.github.com
         labels:
         - preview
-      requeueAfterSeconds: 1800
+        requeueAfterSeconds: 120
   template:
     metadata:
       name: 'ioaiaaii-{{.branch_slug}}-{{.number}}'
