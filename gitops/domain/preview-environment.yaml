@@ -27,6 +27,8 @@ spec:
           parameters:
           - name: web.image.tag
             value: '{{.branch_slug}}'
+          - name: web.image.pullPolicy
+            value: Always
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
