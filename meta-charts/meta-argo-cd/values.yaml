@@ -33,14 +33,14 @@ argo-cd:
     resources:
       limits:
         cpu: 500m
-        memory: 512Mi
+        memory: 1024Mi
       requests:
         cpu: 250m
-        memory: 256Mi
+        memory: 712Mi
   server:
     autoscaling:
       enabled: true
-      maxReplicas: 2
+      maxReplicas: 4
       targetCPUUtilizationPercentage: 70
       targetMemoryUtilizationPercentage: 70
     resources:
@@ -54,16 +54,16 @@ argo-cd:
     name: repo-server
     autoscaling:
       enabled: true
-      maxReplicas: 2
+      maxReplicas: 4
       targetCPUUtilizationPercentage: 70
       targetMemoryUtilizationPercentage: 70
     resources:
      limits:
+       cpu: 100m
+       memory: 256Mi
+     requests:
        cpu: 50m
        memory: 128Mi
-     requests:
-       cpu: 10m
-       memory: 64Mi
   applicationSet:
     resources:
      limits:
