@@ -40,12 +40,6 @@ kube-prometheus-stack:
 
   alertmanager:
     enabled: false
-    alertmanagerSpec:
-      tolerations: *commonTolerations
-      affinity:
-        nodeAffinity: *commonNodeAffinity
-      resources:
-        <<: *commonResources
 
   grafana:
     tolerations: *commonTolerations
