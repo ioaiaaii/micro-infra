@@ -24,10 +24,8 @@ kube-prometheus-stack:
     rules:
       windows: false
   prometheusOperator:
-
     resources:
-      resources:
-        <<: *commonResources
+      <<: *commonResources
 
     affinity:
       nodeAffinity: *commonNodeAffinity  # Use YAML anchor if defining common affinity
@@ -40,9 +38,6 @@ kube-prometheus-stack:
         nodeAffinity: *commonNodeAffinity
       resources:
         <<: *commonResources
-        requests:
-          cpu: "200m"
-          memory: "256Mi"
 
   alertmanager:
     enabled: false
@@ -58,6 +53,3 @@ kube-prometheus-stack:
     nodeAffinity: *commonNodeAffinity
     resources:
       <<: *commonResources
-      requests:
-        cpu: "50m" 
-        memory: "64Mi"
