@@ -5,3 +5,10 @@ ingress-nginx:
         cloud.google.com/network-tier: Standard
     autoscaling:
       enabled: true
+    resources:
+      limits:
+        cpu: 100m
+        memory: 100Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
