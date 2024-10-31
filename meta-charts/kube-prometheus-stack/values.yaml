@@ -1,55 +1,55 @@
 # Define common blocks at the top for reusability
-commonTolerations: &commonTolerations
-  - effect: "NoSchedule"
-    key: "dedicated"
-    operator: "Equal"
-    value: "infrastructure"
+# commonTolerations: &commonTolerations
+#   - effect: "NoSchedule"
+#     key: "dedicated"
+#     operator: "Equal"
+#     value: "infrastructure"
 
-commonNodeAffinity: &commonNodeAffinity
-  requiredDuringSchedulingIgnoredDuringExecution:
-    nodeSelectorTerms:
-      - matchExpressions:
-          - key: "dedicated"
-            operator: "In"
-            values:
-              - "infrastructure"
+# commonNodeAffinity: &commonNodeAffinity
+#   requiredDuringSchedulingIgnoredDuringExecution:
+#     nodeSelectorTerms:
+#       - matchExpressions:
+#           - key: "dedicated"
+#             operator: "In"
+#             values:
+#               - "infrastructure"
 
-commonResources: &commonResources
-  requests:
-    cpu: "100m"
-    memory: "128Mi"
+# commonResources: &commonResources
+#   requests:
+#     cpu: "100m"
+#     memory: "128Mi"
 
 kube-prometheus-stack:
   defaultRules:
     rules:
       windows: false
-  prometheusOperator:
-    resources:
-      <<: *commonResources
+  # prometheusOperator:
+  #   resources:
+  #     <<: *commonResources
 
-    affinity:
-      nodeAffinity: *commonNodeAffinity  # Use YAML anchor if defining common affinity
-    tolerations: *commonTolerations  # Reuse common tolerations
+  #   affinity:
+  #     nodeAffinity: *commonNodeAffinity  # Use YAML anchor if defining common affinity
+  #   tolerations: *commonTolerations  # Reuse common tolerations
     
-  prometheus:
-    prometheusSpec:
-      tolerations: *commonTolerations
-      affinity:
-        nodeAffinity: *commonNodeAffinity
-      resources:
-        <<: *commonResources
+  # prometheus:
+  #   prometheusSpec:
+  #     tolerations: *commonTolerations
+  #     affinity:
+  #       nodeAffinity: *commonNodeAffinity
+  #     resources:
+  #       <<: *commonResources
 
-  alertmanager:
-    enabled: false
-    alertmanagerSpec:
-      tolerations: *commonTolerations
-      affinity:
-        nodeAffinity: *commonNodeAffinity
-      resources:
-        <<: *commonResources
+  # alertmanager:
+  #   enabled: false
+  #   alertmanagerSpec:
+  #     tolerations: *commonTolerations
+  #     affinity:
+  #       nodeAffinity: *commonNodeAffinity
+  #     resources:
+  #       <<: *commonResources
 
-  grafana:
-    tolerations: *commonTolerations
-    nodeAffinity: *commonNodeAffinity
-    resources:
-      <<: *commonResources
+  # grafana:
+  #   tolerations: *commonTolerations
+  #   nodeAffinity: *commonNodeAffinity
+  #   resources:
+  #     <<: *commonResources
