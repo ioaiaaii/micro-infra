@@ -13,5 +13,19 @@ ingress-nginx:
         cpu: 100m
         memory: 100Mi
       requests:
-        cpu: 100m
+        cpu: 50m
         memory: 100Mi
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: dedicated
+              operator: In
+              values:
+              - infrastructure 
+    tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+        value: infrastructure
