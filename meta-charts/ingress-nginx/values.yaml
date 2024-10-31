@@ -5,6 +5,9 @@ ingress-nginx:
         cloud.google.com/network-tier: Standard
     autoscaling:
       enabled: true
+      maxReplicas: 3
+      targetCPUUtilizationPercentage: 70
+      targetMemoryUtilizationPercentage: 70
     resources:
       limits:
         cpu: 100m
