@@ -9,14 +9,8 @@ argo-cd:
         key: dedicated
         operator: Equal
         value: infrastructure
-    # Default affinity preset for all components
     affinity:
-      # -- Default pod anti-affinity rules. Either: `none`, `soft` or `hard`
-      podAntiAffinity: soft
-      # Node affinity rules
       nodeAffinity:
-        # -- Default node affinity rules. Either: `none`, `soft` or `hard`
-        type: soft
         matchExpressions:
           - key: dedicated
             operator: In
