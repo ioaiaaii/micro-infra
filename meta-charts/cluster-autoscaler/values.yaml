@@ -27,3 +27,10 @@ cluster-autoscaler:
       key: dedicated
       operator: Equal
       value: infrastructure
+  resources:
+    limits:
+      cpu: 100m
+      memory: 100Mi
+    requests:
+      cpu: 50m
+      memory: 100Mi
