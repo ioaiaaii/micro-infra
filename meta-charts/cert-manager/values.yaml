@@ -1,6 +1,8 @@
 cert-manager:
   crds:
     enabled: true
+  clusterResourceNamespace: infrastructure
+  enableCertificateOwnerRef: true
   resources:
     requests:
       cpu: 10m
