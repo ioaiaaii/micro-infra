@@ -29,12 +29,24 @@ spec:
             value: '{{.branch_slug}}'
           - name: web.image.pullPolicy
             value: Always
+          - name: ingress.hostname
+            value: '{{.branch_slug}}.ioaiaaii.net'
+          - name: tls[0].hosts[0]
+            value: '{{.branch_slug}}.ioaiaaii.net'
+          - name: tls[0].secretName
+            value: 'letsencrypt-cluster-cert-ioaiaaii'        
       syncPolicy:
-        syncOptions:
-          - CreateNamespace=true
         automated:
           prune: true
           selfHeal: true
+        managedNamespaceMetadata:
+          labels:
+            argocd.argoproj.io/instance: 'ioaiaaii-{{.branch_slug}}-{{.number}}'
+          annotations:
+            argocd.argoproj.io/tracking-id: >-
+              'ioaiaaii-{{.branch_slug}}-{{.number}}:/Namespace:ioaiaaii-{{.branch_slug}}-{{.number}}/ioaiaaii-{{.branch_slug}}-{{.number}}'
+        syncOptions:
+        - CreateNamespace=true              
       project: products
       destination:
         server: https://kubernetes.default.svc
