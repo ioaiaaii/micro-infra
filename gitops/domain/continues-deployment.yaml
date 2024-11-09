@@ -13,7 +13,8 @@ spec:
   source:
     repoURL: 'https://github.com/ioaiaaii/ioaiaaii.net.git'
     path: deploy/helm/ioaiaaii
-    targetRevision: HEAD
+    targetRevision: "v*"           # Match tags that start with 'v'
+    tracking: latest               # Automatically track the latest matching tag
     helm:
       valueFiles:
         - values.yaml
