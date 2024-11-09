@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ioaiaaii-deployment
+  namespace: platform
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/ioaiaaii/ioaiaaii.net.git
+        revision: "refs/tags/v*"  # Only matches tags starting with 'v'      
+  template:
+    metadata:
+      name: 'ioaiaaii-{{ .revision }}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io      
+    spec:
+      source:
+        repoURL: https://github.com/ioaiaaii/ioaiaaii.net.git
+        targetRevision: "{{ .revision }}"
+        path: deploy/helm/ioaiaaii
+        helm:
+          parameters:
+            - name: image.tag
+              value: "{{ .revision }}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true              
+      project: products
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'ioaiaaii-live'
