@@ -23,7 +23,7 @@ EOF
 }
 
 terraform {
-  source = "git::https://github.com/ioaiaaii/ioaiaaii.net.git//deploy/iac?ref=feat/styling-improv"
+  source = "git::https://github.com/ioaiaaii/ioaiaaii.net.git//deploy/iac?ref=v1.1.4"
 }
 
 inputs = {
