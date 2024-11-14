@@ -29,7 +29,7 @@ kube-prometheus-stack:
     affinity:
       nodeAffinity: *commonNodeAffinity  # Use YAML anchor if defining common affinity
     tolerations: *commonTolerations  # Reuse common tolerations
-    
+
   prometheus:
     prometheusSpec:
       tolerations: *commonTolerations
@@ -55,3 +55,16 @@ kube-prometheus-stack:
     nodeAffinity: *commonNodeAffinity
     resources:
       <<: *commonResources
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/auth-tls-secret: infrastructure/mtls-ca-secret  # CA certificate secret
+        nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
+      ingressClassName: "nginx"
+      hostname: grafana.ioaiaaii.net
+      tls:
+      - hosts:
+        - grafana.ioaiaaii.net
+        secretName: letsencrypt-cluster-cert-ioaiaaii 
