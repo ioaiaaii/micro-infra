@@ -1,0 +1,13 @@
+# This CA certificate, signed by the mtls-ca-issuer,
+# will be used by the NGINX Ingress to validate client certificates.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mtls-ca-cert
+spec:
+  isCA: true
+  commonName: "mtls-ca"
+  secretName: mtls-ca-secret
+  issuerRef:
+    name: mtls-ca-issuer
+    kind: ClusterIssuer

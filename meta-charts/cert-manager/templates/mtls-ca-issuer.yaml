@@ -1,0 +1,8 @@
+# This ClusterIssuer will act as the Certificate Authority (CA) 
+# for issuing client certificates for mTLS.
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: mtls-ca-issuer
+spec:
+  selfSigned: {}
