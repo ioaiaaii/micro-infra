@@ -50,6 +50,20 @@ argo-cd:
       requests:
         cpu: 50m
         memory: 64Mi
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/auth-tls-secret: infrastructure/mtls-ca-secret  # CA certificate secret
+        nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
+        nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "false"
+      ingressClassName: "nginx"
+      hostname: argocd.ioaiaaii.net
+      extraTls:
+      - hosts:
+        - argocd.ioaiaaii.net
+        secretName: letsencrypt-cluster-cert-ioaiaaii     
   repoServer:
     name: repo-server
     autoscaling:
