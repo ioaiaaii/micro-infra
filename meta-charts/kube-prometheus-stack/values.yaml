@@ -63,7 +63,8 @@ kube-prometheus-stack:
         nginx.ingress.kubernetes.io/auth-tls-secret: infrastructure/mtls-ca-secret  # CA certificate secret
         nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
       ingressClassName: "nginx"
-      hostname: grafana.ioaiaaii.net
+      hosts:
+        - grafana.ioaiaaii.net      
       tls:
       - hosts:
         - grafana.ioaiaaii.net
