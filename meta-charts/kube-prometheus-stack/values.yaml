@@ -37,8 +37,6 @@ kube-prometheus-stack:
         nodeAffinity: *commonNodeAffinity
       resources:
         <<: *commonResources
-        requests:
-          memory: "350Mi"
       retention: 30d
       retentionSize: 18GB
       storageSpec:
