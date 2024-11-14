@@ -64,7 +64,7 @@ kube-prometheus-stack:
         nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
       ingressClassName: "nginx"
       hosts:
-        - grafana.ioaiaaii.net      
+        - grafana.ioaiaaii.net
       tls:
       - hosts:
         - grafana.ioaiaaii.net
