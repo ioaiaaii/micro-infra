@@ -32,6 +32,7 @@ kube-prometheus-stack:
 
   prometheus:
     prometheusSpec:
+      enableRemoteWriteReceiver: true
       tolerations: *commonTolerations
       affinity:
         nodeAffinity: *commonNodeAffinity
