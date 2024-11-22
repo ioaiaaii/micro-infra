@@ -87,7 +87,6 @@ kube-prometheus-stack:
       orgId: 1
       url: http://tempo.observability:3100/    
       basicAuth: false
-      isDefault: true
       version: 1
       editable: true
       apiVersion: 1
