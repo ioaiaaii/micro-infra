@@ -71,6 +71,7 @@ kube-prometheus-stack:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/auth-tls-secret: infrastructure/mtls-ca-secret  # CA certificate secret
         nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
+        nginx.ingress.kubernetes.io/enable-opentelemetry: "false"
       ingressClassName: "nginx"
       hosts:
         - grafana.ioaiaaii.net

@@ -58,6 +58,7 @@ argo-cd:
         nginx.ingress.kubernetes.io/auth-tls-secret: infrastructure/mtls-ca-secret  # CA certificate secret
         nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
         nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "false"
+        nginx.ingress.kubernetes.io/enable-opentelemetry: "false"        
       ingressClassName: "nginx"
       hostname: argocd.ioaiaaii.net
       extraTls:
