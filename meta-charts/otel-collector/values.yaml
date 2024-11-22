@@ -1,0 +1,57 @@
+opentelemetry-collector:
+
+  fullnameOverride: "otel-collector"
+  image:
+    repository: "otel/opentelemetry-collector-contrib"
+    tag: "0.114.0"
+  command:
+    name: "otelcol-contrib"
+  mode: deployment 
+
+  presets: 
+    # Enables the filelogreceiver and adds it to the logs pipelines 
+    logsCollection: 
+      enabled: false 
+  config:
+    receivers:
+      jaeger: null
+      prometheus: null
+      zipkin: null  
+    exporters: 
+      otlp: 
+        endpoint: tempo.observability.svc.cluster.local:4317
+        tls: 
+          insecure: true
+      prometheusremotewrite:
+        endpoint: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090/api/v1/write
+      debug:
+        verbosity: detailed         
+    service: 
+      telemetry: 
+        logs:
+          level: "debug"
+      pipelines: 
+        traces:
+          receivers:
+            - otlp  # Enable OTLP trace receiver
+          processors:
+            - batch  # Batch traces for efficiency
+          exporters:
+            - otlp  # Export traces to Tempo  
+            - debug 
+        metrics:
+          receivers:
+            - otlp  # Enable OTLP trace receiver
+          processors:
+            - batch  # Batch traces for efficiency
+          exporters:
+            - prometheusremotewrite  # Export traces to Prom remote write   
+            - debug
+        logs: null
+  tolerations:
+    - effect: NoSchedule
+      key: dedicated
+      operator: Equal
+      value: infrastructure
+  service:
+    enabled: true
