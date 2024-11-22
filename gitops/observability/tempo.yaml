@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tempo
+  namespace: platform
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: observability
+    server: https://kubernetes.default.svc
+  project: observability
+  source:
+    repoURL: 'https://github.com/ioaiaaii/micro-infra.git'
+    path: meta-charts/tempo
+    targetRevision: HEAD
+    helm:
+      skipCrds: true
+      valueFiles:
+        - values.yaml
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

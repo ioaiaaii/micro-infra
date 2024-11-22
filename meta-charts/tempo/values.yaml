@@ -1,0 +1,15 @@
+tempo:
+  persistence:
+    enabled: true
+    size: "20Gi"
+  tempo:
+    retention: "48h"
+    resources:
+      limits:
+        cpu: 100m
+        memory: 100Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi 
+  serviceMonitor:
+    enabled: true
