@@ -34,6 +34,8 @@ kube-prometheus-stack:
 
   prometheus:
     prometheusSpec:
+      #Allow serviceMonitor discovery on all ns, without selectors
+      serviceMonitorSelectorNilUsesHelmValues: false
       enableRemoteWriteReceiver: true
       tolerations: *commonTolerations
       affinity:
