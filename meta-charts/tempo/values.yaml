@@ -3,6 +3,8 @@ tempo:
     enabled: true
     size: "20Gi"
   tempo:
+    server:
+      http_listen_port: 3200
     retention: "48h"
     resources:
       limits:
