@@ -8,14 +8,14 @@ ingress-nginx:
       enabled: true
       maxReplicas: 3
       targetCPUUtilizationPercentage: 70
-      targetMemoryUtilizationPercentage: 70
+      targetMemoryUtilizationPercentage: 80
     resources:
       limits:
-        cpu: 100m
-        memory: 100Mi
-      requests:
         cpu: 50m
-        memory: 100Mi
+        memory: 150Mi
+      requests:
+        cpu: 10m
+        memory: 150Mi
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -24,7 +24,7 @@ ingress-nginx:
             - key: dedicated
               operator: In
               values:
-              - infrastructure 
+              - infrastructure
     tolerations:
       - effect: NoSchedule
         key: dedicated
