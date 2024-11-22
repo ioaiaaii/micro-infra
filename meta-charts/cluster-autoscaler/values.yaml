@@ -5,10 +5,10 @@ cluster-autoscaler:
   autoscalingGroupsnamePrefix:
     - name: gke-ioaiaaii-workers-base-pool
       minSize: 1
-      maxSize: 4
+      maxSize: 2
     - name: gke-ioaiaaii-infrastructure
       minSize: 1
-      maxSize: 2
+      maxSize: 3
   extraArgs:
     leader-elect: false
     scale-down-utilization-threshold: 0.6
