@@ -81,8 +81,8 @@ kube-prometheus-stack:
     additionalDataSources:
     - name: Tempo
       type: tempo
-      uid: EbPG8fYozaAs
-      url: http://tempo.observability.svc.cluster.local:3100
+      uid: tempo
+      url: http://tempo.observability:3100/
       access: proxy
       basicAuth: false
       jsonData:
