@@ -78,34 +78,34 @@ kube-prometheus-stack:
       - hosts:
         - grafana.ioaiaaii.net
         secretName: letsencrypt-cluster-cert-ioaiaaii 
-    additionalDataSources:
-    - name: Tempo
-      type: tempo
-      uid: tempo
-      url: http://tempo.observability:3100/
-      access: proxy
-      basicAuth: false
-      jsonData:
-        tracesToMetrics:
-          datasourceUid: 'prometheus'
-          spanStartTimeShift: '1h'
-          spanEndTimeShift: '-1h'
-          tags: [{ key: 'service.name', value: 'service' }, { key: 'job' }]
-          queries:
-            - name: 'Sample query'
-              query: 'sum(rate(traces_spanmetrics_latency_bucket{$$__tags}[5m]))'
-        serviceMap:
-          datasourceUid: 'prometheus'
-        nodeGraph:
-          enabled: true
-        search:
-          hide: false
-        traceQuery:
-          timeShiftEnabled: true
-          spanStartTimeShift: '1h'
-          spanEndTimeShift: '-1h'
-        spanBar:
-          type: 'Tag'
-          tag: 'http.path'
-        streamingEnabled:
-          search: true
+    # additionalDataSources:
+    # - name: Tempo
+    #   type: tempo
+    #   uid: tempo
+    #   url: http://tempo.observability:3100/
+    #   access: proxy
+    #   basicAuth: false
+    #   jsonData:
+    #     tracesToMetrics:
+    #       datasourceUid: 'prometheus'
+    #       spanStartTimeShift: '1h'
+    #       spanEndTimeShift: '-1h'
+    #       tags: [{ key: 'service.name', value: 'service' }, { key: 'job' }]
+    #       queries:
+    #         - name: 'Sample query'
+    #           query: 'sum(rate(traces_spanmetrics_latency_bucket{$$__tags}[5m]))'
+    #     serviceMap:
+    #       datasourceUid: 'prometheus'
+    #     nodeGraph:
+    #       enabled: true
+    #     search:
+    #       hide: false
+    #     traceQuery:
+    #       timeShiftEnabled: true
+    #       spanStartTimeShift: '1h'
+    #       spanEndTimeShift: '-1h'
+    #     spanBar:
+    #       type: 'Tag'
+    #       tag: 'http.path'
+    #     streamingEnabled:
+    #       search: true
