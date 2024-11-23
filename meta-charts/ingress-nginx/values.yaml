@@ -47,8 +47,7 @@ ingress-nginx:
       otel-sampler: "TraceIdRatioBased" # Also: AlwaysOff, TraceIdRatioBased
       otel-sampler-ratio: "0.1" #probability to sample requests
       otel-sampler-parent-based: "true"
-      opentelemetry-custom-attributes: |
-        client.ip=$http_x_forwarded_for
+
               
       #proxing pass source IP information
       #https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#use-proxy-protocol
@@ -68,10 +67,9 @@ ingress-nginx:
       log-format-upstream: >-
         {
         "time":"$time_iso8601",
-        "client_ip":"$http_x_forwarded_for",     
-        "forwarded_for":"$http_x_forwarded_for",
-        "proxy_remote_addr": "$proxy_protocol_addr",           
         "remote_addr":"$remote_addr",
+        "x-forward-for": "$proxy_add_x_forwarded_for"
+        "proxy_remote_addr": "$proxy_protocol_addr",
         "body_bytes_sent":"$body_bytes_sent",
         "bytes_sent": $bytes_sent,
         "host":"$host",
