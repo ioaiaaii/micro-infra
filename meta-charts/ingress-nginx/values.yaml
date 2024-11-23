@@ -68,7 +68,7 @@ ingress-nginx:
         {
         "time":"$time_iso8601",
         "remote_addr":"$remote_addr",
-        "x-forward-for": "$proxy_add_x_forwarded_for"
+        "x-forward-for": "$proxy_add_x_forwarded_for",
         "proxy_remote_addr": "$proxy_protocol_addr",
         "body_bytes_sent":"$body_bytes_sent",
         "bytes_sent": $bytes_sent,
