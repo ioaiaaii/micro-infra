@@ -3,18 +3,17 @@ tempo:
     enabled: true
     size: "10Gi"
   tempo:
-    retention: "36h"
+    retention: "48h"
     resources:
       limits:
         cpu: 100m
         memory: 500Mi
       requests:
         cpu: 50m
-        memory: 300Mi
+        memory: 400Mi
     ingester:
-      max_block_bytes: 1
-      max_block_duration: 5m
-      flush_check_period: 1s
-      trace_idle_period: 1s        
+      trace_idle_period: 10s       # The length of time after a trace has not received spans to consider it complete and flush it.
+      max_block_bytes: 1_000_000   # Cut the head block when it hits this size or
+      max_block_duration: 5m       # this much time passes 
   serviceMonitor:
     enabled: true
