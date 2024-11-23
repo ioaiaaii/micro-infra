@@ -51,10 +51,11 @@ ingress-nginx:
               
       #proxing pass source IP information
       #https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#use-proxy-protocol
-      # use-forwarded-headers: "true"
-      use-proxy-protocol: "true"
-      # compute-full-forwarded-for: "true"
-      # proxy-add-original-uri-header: "true"
+      use-forwarded-headers: "true"
+      # use-proxy-protocol: "true"
+      enable-real-ip: "true"
+      compute-full-forwarded-for: "true"
+      proxy-add-original-uri-header: "true"
   
       #hardening
       force-ssl-redirect: "true"      
