@@ -13,7 +13,7 @@ tempo:
         memory: 300Mi
     ingester:
       max_block_bytes: 1
-      max_block_duration: 5s
+      max_block_duration: 5m
       flush_check_period: 1s
       trace_idle_period: 1s        
   serviceMonitor:
