@@ -1,9 +1,4 @@
 tempo:
-  ingester:
-    max_block_bytes: 1
-    max_block_duration: 5s
-    flush_check_period: 1s
-    trace_idle_period: 1s
   persistence:
     enabled: true
     size: "10Gi"
@@ -15,6 +10,11 @@ tempo:
         memory: 600Mi
       requests:
         cpu: 50m
-        memory: 300Mi 
+        memory: 300Mi
+    ingester:
+      max_block_bytes: 1
+      max_block_duration: 5s
+      flush_check_period: 1s
+      trace_idle_period: 1s        
   serviceMonitor:
     enabled: true
