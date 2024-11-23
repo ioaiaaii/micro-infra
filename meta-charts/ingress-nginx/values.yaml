@@ -33,7 +33,10 @@ ingress-nginx:
         value: infrastructure
     metrics:
       enabled: true
-      serviceMonitor: true
+      serviceMonitor: 
+        enabled: true
+        additionalLabels:
+          release: kube-prometheus-stack
     config:
       #tracing
       enable-opentelemetry: "true"
