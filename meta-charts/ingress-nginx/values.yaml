@@ -32,6 +32,7 @@ ingress-nginx:
         operator: Equal
         value: infrastructure
     metrics:
+      enabled: true
       serviceMonitor: true
     config:
       #tracing
