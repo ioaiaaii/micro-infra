@@ -50,8 +50,9 @@ ingress-nginx:
         client.ip=$http_x_forwarded_for
               
       #proxing pass source IP information
+      #https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#use-proxy-protocol
       use-forwarded-headers: "true"
-      forwarded-for-header: "X-Forwarded-For"
+      use-proxy-protocol: "true"
       compute-full-forwarded-for: "true"
       proxy-add-original-uri-header: "true"
   
