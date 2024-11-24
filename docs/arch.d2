@@ -1,0 +1,211 @@
+vars: {
+  d2-config: {
+    center: true
+    layout-engine: elk #https://github.com/terrastruct/tala?tab=readme-ov-file#installation
+    theme-id: 300
+  }
+}
+direction: right
+
+classes: {
+  internet: {
+    icon: https://icons.terrastruct.com/essentials%2F140-internet.svg
+    shape: image
+  }
+  lb: {
+    icon: https://icons.terrastruct.com/gcp%2FProducts%20and%20services%2FNetworking%2FCloud%20Load%20Balancing.svg
+    shape: image
+  }
+  dns: {
+    label: Squarespace
+    icon: https://upload.wikimedia.org/wikipedia/commons/c/c5/Squarespace_Logo.png
+    shape: image
+  }
+  tls: {
+    label: Let's Encrypt
+    icon: https://upload.wikimedia.org/wikipedia/commons/8/89/Let%27s_Encrypt_icon.svg
+    shape: image
+    style.font-color: orange
+    icon.near: outside-left-center
+  }
+  k8s_svc: {
+    icon: https://diagrams.mingrammer.com/img/resources/k8s/network/ing.png
+    shape: image
+  }
+  k8s_pod: {
+    icon: https://diagrams.mingrammer.com/img/resources/k8s/compute/pod.png
+    shape: image
+  }
+  ingress_controller: {
+    icon: https://docs.nginx.com//images/icons/NGINX-Controller-product-icon-RGB.svg
+    shape: image
+  }
+  gkeControlPlane: {
+    icon: https://diagrams.mingrammer.com/img/resources/gcp/compute/kubernetes-engine.png
+    shape: image
+    label: "Control Plane"
+  }
+  prometheusOperator: {
+    icon: https://upload.wikimedia.org/wikipedia/commons/3/38/Prometheus_software_logo.svg
+    shape: image
+    label: "Prometheus Operator" # No text under Grafana
+  }
+  prometheusAlertManager: {
+    icon: https://upload.wikimedia.org/wikipedia/commons/3/38/Prometheus_software_logo.svg
+    shape: image
+    label: "Alert Manager" # No text under Grafana
+  }
+  prometheus: {
+    icon: https://upload.wikimedia.org/wikipedia/commons/3/38/Prometheus_software_logo.svg
+    shape: image
+    label: "Prometheus" # No text under Grafana
+  }    
+  grafana: {
+    icon: https://raw.githubusercontent.com/grafana/grafana/refs/heads/main/public/img/grafana_icon.svg
+    shape: image
+    label: "Grafana" # No text under Grafana
+
+  }
+  tempo: {
+    icon: https://grafana.com/static/assets/img/logos/grafana-tempo.svg
+    shape: image
+    label: "Tempo" # No text under Grafana
+
+  }
+  otel_collector: {
+    icon: https://avatars.githubusercontent.com/u/49998002?s=280&v=4
+    shape: image
+    label: "OTEL Collector" # No text under Grafana
+  }
+
+  clusterAutoscaler: {
+    icon: https://raw.githubusercontent.com/kubernetes/kubernetes/refs/heads/master/logo/logo.svg
+    shape: image
+    label: "Cluster Autoscaler" # No text under Grafana
+    style.font-color: blue
+  }  
+  
+  ingressNginx: {
+    icon: https://docs.nginx.com//images/icons/NGINX-Controller-product-icon-RGB.svg
+    shape: image
+    label: "Ingress NGINX Controller" # No text under Grafana
+  }
+
+  certManager: {
+    icon: https://cert-manager.io/images/cert-manager-logo-icon.svg
+    shape: image
+    label: "Cert Manager" # No text under Grafana
+  }
+
+  instanceGroups: {
+    icon: https://codelabs.developers.google.com/static/codelabs/cloud-compute-engine/img/5bcdca7120f6201a_1920.png
+    shape: image
+    label: "Instrance Groups" # No text under Grafana    
+  }
+
+  argoCD: {
+    icon: https://argo-cd.readthedocs.io/en/stable/assets/logo.png
+    shape: image
+    label: "ArgoCD"
+    style.stroke: "#ade1ed"
+  }
+}
+
+# Top-level nodes
+Internet.class: internet
+DNS.class: dns
+TLS.class: tls
+
+Internet -> DNS: {label: "GET *.ioaiaaii.net to IP"}
+Internet -> TLS: {
+  label: "Verify TLS Cert for *.ioaiaaii.net"
+  style.stroke: orange
+}
+
+# GCP Infrastructure
+GCP: {
+  Cloud Load Balancer.class: lb
+  _.DNS -> Cloud Load Balancer: {label: "Resolve to GCP LB"}
+  Control Plane.class: gkeControlPlane
+  Instance Groups.class: instanceGroups
+
+  GKE Private Cluster: {
+
+    Observability: {
+      Grafana.class: grafana
+      Tempo.class: tempo
+      Otel Collector.class: otel_collector
+      Prometheus Operator.class: prometheusOperator
+      Prometheus.class: prometheus
+      AlertManager.class: prometheusAlertManager
+      Prometheus Operator -> Prometheus :{ 
+        style.stroke: red }
+      Prometheus Operator -> AlertManager :{ 
+        style.stroke: red }
+
+      Tempo -> Grafana : {label: "Datasource"}
+      Prometheus -> Grafana : {
+        label: "Datasource" 
+        style.stroke: red }
+      # _.Infrastructure.ingressNginx <-> Grafana: {
+      #   label: "mTLS Exposed Ing"
+      #   style.stroke: green 
+      # }
+
+  
+      Otel Collector -> Tempo : {label: "Push Traces"}
+      Otel Collector -> Prometheus : {label: "Push Metrics to remote write"}      
+    }
+    
+    Infrastructure: {
+
+      certManager.class: certManager
+      clusterAutoscaler.class: clusterAutoscaler
+      ingressNginx.class: ingressNginx
+      certManager <->_._._.TLS : {
+        label: "Cluster Issuer"
+        style.stroke: orange
+      }
+      certManager <-> ingressNginx
+      _._.Cloud Load Balancer <-> ingressNginx :{
+        style.stroke: green
+      }
+
+      clusterAutoscaler <-> _._.Control Plane : {
+        label: "Observe API"
+        style.stroke: blue
+      }
+      clusterAutoscaler <-> _._.Instance Groups :{
+        label: "Manage Nodes"
+        style.stroke: blue
+      }
+    }
+
+    Platform: {
+      argoCD.class: argoCD
+      argoCD -> _.Infrastructure : {
+        style.stroke: "#ade1ed"
+      }
+      argoCD -> _.Observability : {
+        style.stroke: "#ade1ed"
+      }
+      argoCD -> _.Products : {
+        style.stroke: "#ade1ed"
+      }
+      # _.Infrastructure.ingressNginx <-> argoCD: {
+      #   label: "mTLS Exposed Ing"
+      #   style.stroke: green
+      # }
+
+    }
+
+    Products: {
+      argoCD.class: argoCD
+      argoCdD.class: argoCD
+      # _.Infrastructure.ingressNginx <-> argoCD: {
+      #   label: "TLS Exposed Ing"
+      #   style.stroke: green
+      # }
+    }    
+  }
+}
