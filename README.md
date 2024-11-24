@@ -13,7 +13,7 @@ The infrastructure is organized into distinct namespaces, each serving a specifi
 
 Below is the architecture diagram illustrating the components and their interactions:
 
-![Micro-Infra Architecture](./docs/arch.svg)
+![Micro-Infra Architecture](./docs/arch_v1.svg)
 
 ## Key Components
 
