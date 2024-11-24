@@ -1,7 +1,6 @@
 # micro-infra
 
 micro-infra is a lightweight, cloud-native infrastructure designed to manage and deploy microservices.
-Deployed in GCP due to GKE Control Plain regional free tier.
 
 ```shell
 micro-infra/
@@ -9,10 +8,20 @@ micro-infra/
 ├── gitops/                               # GitOps resources for ArgoCD
 ├── iac/                                  # Infrastructure-as-Code with Terragrunt
 ├── meta-charts/                          # Meta Helm charts for for gitops
-├── repo-operator/                        # Repository operator for managing and automating workflows
+├── repo-operator/                        # Submode repository operator for managing and automating workflows
 ├── runbooks                              # Runbooks for operations and alerts
 └── scripts                               # Automation scripts for repo scope
 ```
+
+1. **Google Kubernetes Engine (GKE)**:
+   - Private, VPC-native clusters with secure nodes and alias IPs for pods and services.
+   - Modular configuration for node pools, custom taints, and labels.
+2. **Terragrunt Configuration**:
+   - Remote state management with Google Cloud Storage (GCS).
+   - Automated security scanning using **Trivy**, with hooks
+   - Centralized variable management with project and location-specific configuration files.
+2. **GitOps Managed**:
+   - Apps linked to HEAD, defined in /gitops.
 
 ## Architecture Overview
 
