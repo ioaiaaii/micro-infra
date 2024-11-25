@@ -1,0 +1,57 @@
+opencost:
+  fullnameOverride: "opencost"
+  loglevel: "info"
+  opencost:
+    carbonCost:
+      enabled: true
+    cloudCost:
+      enabled: true  
+    ui:
+      enabled: false
+    exporter:
+      defaultClusterId: "ioaiaaii"  
+      env:
+        - name: CLOUD_PROVIDER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: opencost-cloudprovider-api-key
+              key: cloudProviderApiKey         
+    metrics:
+      kubeStateMetrics:
+        emitKsmV1Metrics: false
+        emitKsmV1MetricsOnly: true
+      serviceMonitor:
+        enabled: true
+    prometheus:
+      internal:
+        enabled: true
+        serviceName: kube-prometheus-stack-prometheus
+        namespaceName: observability
+        port: 9090
+      ui:
+      enabled: true
+      resources:
+        limits:
+          cpu: 50m
+          memory: 250Mi
+        requests:
+          cpu: 10m
+          memory: 50Mi
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: dedicated
+                operator: In
+                values:
+                - infrastructure
+      tolerations:
+        - effect: NoSchedule
+          key: dedicated
+          operator: Equal
+          value: infrastructure
+  serviceAccount:
+    name: "opencost"
+    annotations:
+      iam.gke.io/gcp-service-account: compute-viewer-opencost@micro-infra.iam.gserviceaccount.com

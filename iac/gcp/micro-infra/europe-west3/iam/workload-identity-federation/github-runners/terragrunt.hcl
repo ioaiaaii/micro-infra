@@ -27,7 +27,7 @@ terraform {
 }
 
 dependency "sa" {
-  config_path = "../service-accounts"
+  config_path = "../../service-accounts/github-runners"
 }
 
 inputs = {
