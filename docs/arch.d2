@@ -109,6 +109,12 @@ classes: {
     label: "ArgoCD"
     style.stroke: "#ade1ed"
   }
+
+  openCost: {
+    icon: https://avatars.githubusercontent.com/u/105945214?s=200&v=4
+    shape: image
+    label: "OpenCost"
+  }
 }
 
 # Top-level nodes
@@ -138,6 +144,8 @@ GCP: {
       Prometheus Operator.class: prometheusOperator
       Prometheus.class: prometheus
       AlertManager.class: prometheusAlertManager
+      openCost.class: openCost
+
       Prometheus Operator -> Prometheus :{ 
         style.stroke: red }
       Prometheus Operator -> AlertManager :{ 
@@ -200,12 +208,15 @@ GCP: {
     }
 
     Products: {
-      argoCD.class: argoCD
-      argoCdD.class: argoCD
-      # _.Infrastructure.ingressNginx <-> argoCD: {
-      #   label: "TLS Exposed Ing"
-      #   style.stroke: green
-      # }
-    }    
+      ioaiaaii-live.class: argoCD
+      ioaiaaii-preview.class: argoCD
+
+      ioaiaaii-live: {
+        label: "ioaiaaii-live"
+      }
+      ioaiaaii-preview: {
+        label: "ioaiaaii-preview/prs"
+      }
+    }
   }
 }
