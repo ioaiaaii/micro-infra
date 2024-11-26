@@ -46,21 +46,7 @@ ingress-nginx:
       # https://github.com/owasp-modsecurity/ModSecurity/blob/v3/master/modsecurity.conf-recommended
       # Update ModSecurity config and rules   
       modsecurity-snippet: |
-        # Enable prevention mode. Options: DetectionOnly,On,Off (default is DetectionOnly)
         SecRuleEngine On
-
-        # Enable scanning of the request body
-        SecRequestBodyAccess On
-
-        # Send ModSecurity audit logs to the stdout (only for rejected requests)
-        SecAuditLog /dev/stdout
-
-        # format the logs in JSON
-        SecAuditLogFormat JSON
-
-        # could be On/Off/RelevantOnly
-        SecAuditEngine RelevantOnly
-
 
       ### Headers 
 
