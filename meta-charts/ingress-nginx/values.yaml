@@ -12,11 +12,11 @@ ingress-nginx:
       targetMemoryUtilizationPercentage: 80
     resources:
       limits:
-        cpu: 200m
-        memory: 300Mi
-      requests:
         cpu: 100m
         memory: 200Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
