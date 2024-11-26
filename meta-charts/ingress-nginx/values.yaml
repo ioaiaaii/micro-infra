@@ -43,7 +43,7 @@ ingress-nginx:
       enable-modsecurity: "true"
 
       #https://github.com/kubernetes/ingress-nginx/issues/8388
-      enable-owasp-modsecurity-crs: false
+      enable-owasp-modsecurity-crs: true
 
       # https://github.com/owasp-modsecurity/ModSecurity/blob/v3/master/modsecurity.conf-recommended
       modsecurity-snippet: |
