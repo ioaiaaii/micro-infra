@@ -61,6 +61,7 @@ Pyroscope TBD
 
 #### Reporting
 sloth or OpenSLO TBD
+OpenCost
 
 ### Telemetry
 
@@ -107,6 +108,6 @@ Hardening Ingress Controller with official [NGINX Hardening Guide](https://kuber
 - Rate limiting annotations for public exposed Ingresses
 - mTLS support for private access, like grafana ing.
 
-## Operations
+## How-To Operate
 
 TBD, route to /runbooks dir
