@@ -12,11 +12,11 @@ ingress-nginx:
       targetMemoryUtilizationPercentage: 80
     resources:
       limits:
-        cpu: 50m
-        memory: 150Mi
+        cpu: 200m
+        memory: 300Mi
       requests:
-        cpu: 10m
-        memory: 150Mi
+        cpu: 100m
+        memory: 200Mi
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -41,17 +41,23 @@ ingress-nginx:
 
       ### ModSecurity WAF https://kubernetes.github.io/ingress-nginx/user-guide/third-party-addons/modsecurity/#modsecurity-web-application-firewall
       enable-modsecurity: "true"
-      enable-owasp-modsecurity-crs: "true"
+
       #https://github.com/kubernetes/ingress-nginx/issues/8388
+      enable-owasp-modsecurity-crs: true
 
       # https://github.com/owasp-modsecurity/ModSecurity/blob/v3/master/modsecurity.conf-recommended
       modsecurity-snippet: |
         SecRuleEngine On
-        SecRequestBodyAccess On
+        SecStatusEngine Off
+        SecAuditLog /dev/stdout
+        SecAuditLogFormat JSON
         SecAuditEngine RelevantOnly
+        SecRequestBodyAccess On
         SecAuditLogParts ABIJDEFHZ
         SecAuditLog /dev/stdout
-        SecAuditLogType Serial
+        SecAuditLogType Serial        
+        SecRule REMOTE_ADDR "@ipMatch 127.0.0.1" "id:87,phase:1,pass,nolog,ctl:ruleEngine=Off"
+        SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
 
       ## Hiding exposure
       hide-headers: Server,X-Powered-By
