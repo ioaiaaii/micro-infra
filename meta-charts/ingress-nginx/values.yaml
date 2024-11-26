@@ -43,7 +43,7 @@ ingress-nginx:
       enable-modsecurity: "true"
 
       #https://github.com/kubernetes/ingress-nginx/issues/8388
-      enable-owasp-modsecurity-crs: true
+      enable-owasp-modsecurity-crs: false
 
       # https://github.com/owasp-modsecurity/ModSecurity/blob/v3/master/modsecurity.conf-recommended
       modsecurity-snippet: |
@@ -52,8 +52,8 @@ ingress-nginx:
         SecAuditLog /dev/stdout
         SecAuditLogFormat JSON
         SecAuditEngine RelevantOnly
-        SecRule REMOTE_ADDR "@ipMatch 127.0.0.1" "id:87,phase:1,pass,nolog,ctl:ruleEngine=Off"
-        SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
+        # SecRule REMOTE_ADDR "@ipMatch 127.0.0.1" "id:87,phase:1,pass,nolog,ctl:ruleEngine=Off"
+        # SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
               
 
       ### Headers 
