@@ -35,5 +35,6 @@ inputs = {
     "oslogin.googleapis.com",
     "servicenetworking.googleapis.com",
     "secretmanager.googleapis.com",
+    "cloudbilling.googleapis.com",
   ]
 }
