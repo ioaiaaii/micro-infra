@@ -43,11 +43,6 @@ ingress-nginx:
       enable-modsecurity: "true"
       enable-owasp-modsecurity-crs: "true"
 
-      # https://github.com/owasp-modsecurity/ModSecurity/blob/v3/master/modsecurity.conf-recommended
-      # Update ModSecurity config and rules   
-      modsecurity-snippet: |
-        SecRuleEngine On
-
       ### Headers 
 
       ## Hiding exposure
