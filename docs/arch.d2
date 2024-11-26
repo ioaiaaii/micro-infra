@@ -115,6 +115,12 @@ classes: {
     shape: image
     label: "OpenCost"
   }
+
+  terragrunt: {
+    icon: https://global.discourse-cdn.com/flex031/uploads/gruntwork/original/1X/451c24614aece67849fd62d0432d77ecd00735c6.png
+    shape: image
+    label: "Terragrunt"    
+  }
 }
 
 # Top-level nodes
@@ -126,6 +132,12 @@ Internet -> DNS: {label: "GET *.ioaiaaii.net to IP"}
 Internet -> TLS: {
   label: "Verify TLS Cert for *.ioaiaaii.net"
   style.stroke: orange
+}
+Terragrunt.class: terragrunt
+
+Terragrunt ->  GCP : {
+  label: "IAC Managed"
+  style.stroke: purple
 }
 
 # GCP Infrastructure
@@ -200,11 +212,11 @@ GCP: {
       argoCD -> _.Products : {
         style.stroke: "#ade1ed"
       }
-      # _.Infrastructure.ingressNginx <-> argoCD: {
-      #   label: "mTLS Exposed Ing"
-      #   style.stroke: green
-      # }
 
+      _._._.Terragrunt -> argoCD: {
+        label: "IAC Managed"
+        style.stroke: purple
+      }
     }
 
     Products: {
