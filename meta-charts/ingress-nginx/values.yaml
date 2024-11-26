@@ -42,6 +42,12 @@ ingress-nginx:
       ### ModSecurity WAF https://kubernetes.github.io/ingress-nginx/user-guide/third-party-addons/modsecurity/#modsecurity-web-application-firewall
       enable-modsecurity: "true"
       # enable-owasp-modsecurity-crs: "true"
+      #https://github.com/kubernetes/ingress-nginx/issues/8137
+      
+      # https://github.com/owasp-modsecurity/ModSecurity/blob/v3/master/modsecurity.conf-recommended
+      # Update ModSecurity config and rules   
+      modsecurity-snippet: |
+        SecRuleEngine On
 
       ### Headers 
 
