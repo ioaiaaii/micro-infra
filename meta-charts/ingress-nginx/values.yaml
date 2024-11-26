@@ -40,84 +40,84 @@ ingress-nginx:
     config:
 
       ### ModSecurity WAF https://kubernetes.github.io/ingress-nginx/user-guide/third-party-addons/modsecurity/#modsecurity-web-application-firewall
-      # enable-modsecurity: "true"
+      enable-modsecurity: "true"
       # enable-owasp-modsecurity-crs: "true"
 
       # https://github.com/owasp-modsecurity/ModSecurity/blob/v3/master/modsecurity.conf-recommended
-      # # Update ModSecurity config and rules
-      # modsecurity-snippet: |
-      #   # this enables the mod security nextcloud plugin
-      #   Include /etc/nginx/owasp-modsecurity-crs/plugins/nextcloud-rule-exclusions-before.conf
+      # Update ModSecurity config and rules
+      modsecurity-snippet: |
+        # # this enables the mod security nextcloud plugin
+        # Include /etc/nginx/owasp-modsecurity-crs/plugins/nextcloud-rule-exclusions-before.conf
 
-      #   # this enables the default OWASP Core Rule Set
-      #   Include /etc/nginx/owasp-modsecurity-crs/nginx-modsecurity.conf
+        # # this enables the default OWASP Core Rule Set
+        # Include /etc/nginx/owasp-modsecurity-crs/nginx-modsecurity.conf
 
-      #   # Enable prevention mode. Options: DetectionOnly,On,Off (default is DetectionOnly)
-      #   SecRuleEngine On
+        # Enable prevention mode. Options: DetectionOnly,On,Off (default is DetectionOnly)
+        SecRuleEngine On
 
-      #   # Enable scanning of the request body
-      #   SecRequestBodyAccess On
+        # Enable scanning of the request body
+        SecRequestBodyAccess On
 
-      #   # Enable XML and JSON parsing
-      #   SecRule REQUEST_HEADERS:Content-Type "(?:text|application(?:/soap\+|/)|application/xml)/" \
-      #     "id:200000,phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=XML"
+        # Enable XML and JSON parsing
+        SecRule REQUEST_HEADERS:Content-Type "(?:text|application(?:/soap\+|/)|application/xml)/" \
+          "id:200000,phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=XML"
 
-      #   SecRule REQUEST_HEADERS:Content-Type "application/json" \
-      #     "id:200001,phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=JSON"
+        SecRule REQUEST_HEADERS:Content-Type "application/json" \
+          "id:200001,phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=JSON"
 
-      #   # Send ModSecurity audit logs to the stdout (only for rejected requests)
-      #   SecAuditLog /dev/stdout
+        # Send ModSecurity audit logs to the stdout (only for rejected requests)
+        SecAuditLog /dev/stdout
 
-      #   # format the logs in JSON
-      #   SecAuditLogFormat JSON
+        # format the logs in JSON
+        SecAuditLogFormat JSON
 
-      #   # could be On/Off/RelevantOnly
-      #   SecAuditEngine RelevantOnly
+        # could be On/Off/RelevantOnly
+        SecAuditEngine RelevantOnly
 
-      #   # Enable XML request body parser.
-      #   # Initiate XML Processor in case of xml content-type
-      #   #
-      #   SecRule REQUEST_HEADERS:Content-Type "^(?:application(?:/soap\+|/)|text/)xml" \
-      #       "id:'200000',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=XML"
+        # Enable XML request body parser.
+        # Initiate XML Processor in case of xml content-type
+        #
+        SecRule REQUEST_HEADERS:Content-Type "^(?:application(?:/soap\+|/)|text/)xml" \
+            "id:'200000',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=XML"
 
-      #   # Enable JSON request body parser.
-      #   # Initiate JSON Processor in case of JSON content-type; change accordingly
-      #   # if your application does not use 'application/json'
-      #   #
-      #   SecRule REQUEST_HEADERS:Content-Type "^application/json" \
-      #       "id:'200001',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=JSON"
+        # Enable JSON request body parser.
+        # Initiate JSON Processor in case of JSON content-type; change accordingly
+        # if your application does not use 'application/json'
+        #
+        SecRule REQUEST_HEADERS:Content-Type "^application/json" \
+            "id:'200001',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=JSON"
 
-      #   # Sample rule to enable JSON request body parser for more subtypes.
-      #   # Uncomment or adapt this rule if you want to engage the JSON
-      #   # Processor for "+json" subtypes
-      #   #
-      #   #SecRule REQUEST_HEADERS:Content-Type "^application/[a-z0-9.-]+[+]json" \
-      #   #     "id:'200006',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=JSON"
+        # Sample rule to enable JSON request body parser for more subtypes.
+        # Uncomment or adapt this rule if you want to engage the JSON
+        # Processor for "+json" subtypes
+        #
+        #SecRule REQUEST_HEADERS:Content-Type "^application/[a-z0-9.-]+[+]json" \
+        #     "id:'200006',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=JSON"
 
-      #   # Maximum request body size we will accept for buffering. If you support
-      #   # file uploads then the value given on the first line has to be as large
-      #   # as the largest file you are willing to accept. The second value refers
-      #   # to the size of data, with files excluded. You want to keep that value as
-      #   # low as practical.
-      #   #
-      #   SecRequestBodyLimit 13107200
-      #   SecRequestBodyNoFilesLimit 131072
+        # Maximum request body size we will accept for buffering. If you support
+        # file uploads then the value given on the first line has to be as large
+        # as the largest file you are willing to accept. The second value refers
+        # to the size of data, with files excluded. You want to keep that value as
+        # low as practical.
+        #
+        SecRequestBodyLimit 13107200
+        SecRequestBodyNoFilesLimit 131072
 
-      #   # What to do if the request body size is above our configured limit.
-      #   # Keep in mind that this setting will automatically be set to ProcessPartial
-      #   # when SecRuleEngine is set to DetectionOnly mode in order to minimize
-      #   # disruptions when initially deploying ModSecurity.
-      #   #
-      #   SecRequestBodyLimitAction Reject
+        # What to do if the request body size is above our configured limit.
+        # Keep in mind that this setting will automatically be set to ProcessPartial
+        # when SecRuleEngine is set to DetectionOnly mode in order to minimize
+        # disruptions when initially deploying ModSecurity.
+        #
+        SecRequestBodyLimitAction Reject
 
-      #   # Maximum parsing depth allowed for JSON objects. You want to keep this
-      #   # value as low as practical.
-      #   #
-      #   SecRequestBodyJsonDepthLimit 512
+        # Maximum parsing depth allowed for JSON objects. You want to keep this
+        # value as low as practical.
+        #
+        SecRequestBodyJsonDepthLimit 512
 
-      #   # Maximum number of args allowed per request. You want to keep this
-      #   # value as low as practical. The value should match that in rule 200007.
-      #   SecArgumentsLimit 1000
+        # Maximum number of args allowed per request. You want to keep this
+        # value as low as practical. The value should match that in rule 200007.
+        SecArgumentsLimit 1000
 
 
       ### Headers 
