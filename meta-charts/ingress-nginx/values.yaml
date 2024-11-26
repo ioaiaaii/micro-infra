@@ -38,7 +38,45 @@ ingress-nginx:
         additionalLabels:
           release: kube-prometheus-stack
     config:
-      #tracing
+      ### Headers 
+
+      ## Hiding exposure
+      hide-headers: Server,X-Powered-By
+
+      ## Proxying source headers information from LB
+      # accept and forward upstream proxy headers
+      use-forwarded-headers: "true"
+      # use-proxy-protocol: "true"
+      # get originating client request IP
+      enable-real-ip: "true"
+      # full Client Traceability during the transport
+      compute-full-forwarded-for: "true"
+      # original URI requested by the client is preserved and forwarded to the backend server as a custom header
+      proxy-add-original-uri-header: "true"
+  
+      ### Hardening https://kubernetes.github.io/ingress-nginx/deploy/hardening-guide/#hardening-guide
+
+      ## TLS
+      #308 Permanent Redirect (redirect but change HTTP Method)
+      force-ssl-redirect: "true"
+      #301 Moved Permanently (redirect but keep HTTP Method)
+      ssl-redirect: "true"
+      #Use fresh and improved TLS Protocol 
+      ssl-protocols: "TLSv1.3"       
+      #ssl_prefer_server_ciphers directive will be enabled by default for http context
+      #Use stronger chiphers 
+      ssl-ciphers: "EECDH+AESGCM:EDH+AESGCM"
+      #ssl-dh-param to be check later/needs secret
+      # protocol that allows clients to check the revocation status of a TLS/SSL certificate with the Certificate Authority in real-time
+      enable-ocsp: "true"
+      ssl-session-tickets: "false"
+
+      ### Observability
+
+      ##Metrics
+      # ServiceMonitor enabled from chart
+
+      ##Tracing
       enable-opentelemetry: "true"
       opentelemetry-operation-name: "HTTP $request_method $service_name $uri"
       opentelemetry-trust-incoming-span: "true"
@@ -52,22 +90,9 @@ ingress-nginx:
       otel-sampler-ratio: "0.1" #probability to sample requests
       otel-sampler-parent-based: "true"
 
-              
-      #proxing pass source IP information
-      #https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#use-proxy-protocol
-      use-forwarded-headers: "true"
-      # use-proxy-protocol: "true"
-      enable-real-ip: "true"
-      compute-full-forwarded-for: "true"
-      proxy-add-original-uri-header: "true"
-  
-      #hardening
-      force-ssl-redirect: "true"      
-      ssl-protocols: "TLSv1.3"
-      ssl_prefer_server_ciphers: 'off'
-      hide-headers: Server,X-Powered-By
-      #logging
+      ##Logging
       log-format-escape-json: "true"
+      enable-access-log-for-default-backend: "true"
       log-format-upstream: >-
         {
         "time":"$time_iso8601",
