@@ -25,8 +25,8 @@ kube-prometheus-stack:
   prometheusOperator:
     resources:
       requests:
-        cpu: "10m"
-        memory: "50Mi"    
+        cpu: "1m"
+        memory: "30Mi"    
 
     affinity:
       nodeAffinity: *commonNodeAffinity  # Use YAML anchor if defining common affinity
@@ -43,7 +43,7 @@ kube-prometheus-stack:
       resources:
         requests:
           cpu: "100m"
-          memory: "400Mi"            
+          memory: "500Mi"            
       retention: 30d
       retentionSize: 18GB
       storageSpec:
@@ -62,7 +62,7 @@ kube-prometheus-stack:
     nodeAffinity: *commonNodeAffinity
     resources:
       requests:
-        cpu: "50m"
+        cpu: "20m"
         memory: "300Mi"    
     ingress:
       enabled: true

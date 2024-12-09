@@ -5,7 +5,7 @@ cert-manager:
   enableCertificateOwnerRef: true
   resources:
     requests:
-      cpu: 10m
+      cpu: 1m
       memory: 32Mi
   affinity:
     nodeAffinity:
@@ -24,8 +24,8 @@ cert-manager:
   webhook:
     resources:
       requests:
-        cpu: 10m
-        memory: 32Mi
+        cpu: 1m
+        memory: 15Mi
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -44,7 +44,7 @@ cert-manager:
   cainjector:
     resources:
       requests:
-        cpu: 10m
+        cpu: 1m
         memory: 32Mi
     affinity:
       nodeAffinity:

@@ -6,11 +6,11 @@ tempo:
     retention: "48h"
     resources:
       limits:
-        cpu: 100m
-        memory: 500Mi
+        cpu: 10m
+        memory: 100Mi
       requests:
-        cpu: 50m
-        memory: 400Mi
+        cpu: 5m
+        memory: 40Mi
     ingester:
       trace_idle_period: 10s       # The length of time after a trace has not received spans to consider it complete and flush it.
       max_block_bytes: 1_000_000   # Cut the head block when it hits this size or
