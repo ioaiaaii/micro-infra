@@ -48,17 +48,19 @@ opentelemetry-collector:
             - prometheusremotewrite  # Export traces to Prom remote write   
             - debug
         logs: null
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: dedicated
+            operator: In
+            values:
+            - infrastructure
   tolerations:
     - effect: NoSchedule
       key: dedicated
       operator: Equal
       value: infrastructure
-  affinity:
-    nodeAffinity:
-      matchExpressions:
-        - key: dedicated
-          operator: In
-          values:
-          - infrastructure
   service:
     enabled: true
