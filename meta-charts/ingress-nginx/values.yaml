@@ -8,11 +8,10 @@ ingress-nginx:
     autoscaling:
       enabled: true
       maxReplicas: 3
-      targetCPUUtilizationPercentage: 70
+      targetCPUUtilizationPercentage: 80
       targetMemoryUtilizationPercentage: 80
     resources:
       limits:
-        cpu: 10m
         memory: 200Mi
       requests:
         cpu: 5m
