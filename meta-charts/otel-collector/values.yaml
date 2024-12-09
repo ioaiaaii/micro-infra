@@ -53,5 +53,12 @@ opentelemetry-collector:
       key: dedicated
       operator: Equal
       value: infrastructure
+  affinity:
+    nodeAffinity:
+      matchExpressions:
+        - key: dedicated
+          operator: In
+          values:
+          - infrastructure
   service:
     enabled: true
