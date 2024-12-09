@@ -59,7 +59,8 @@ kube-prometheus-stack:
 
   grafana:
     tolerations: *commonTolerations
-    nodeAffinity: *commonNodeAffinity
+    affinity:
+      nodeAffinity: *commonNodeAffinity    
     resources:
       requests:
         cpu: "20m"
