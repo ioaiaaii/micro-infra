@@ -35,20 +35,20 @@ opencost:
         serviceName: kube-prometheus-stack-prometheus
         namespaceName: observability
         port: 9090
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: dedicated
-            operator: In
-            values:
-            - infrastructure
-  tolerations:
-    - effect: NoSchedule
-      key: dedicated
-      operator: Equal
-      value: infrastructure
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: dedicated
+              operator: In
+              values:
+              - infrastructure
+    tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+        value: infrastructure
   serviceAccount:
     name: "opencost"
     annotations:
