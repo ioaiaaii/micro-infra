@@ -17,3 +17,18 @@ tempo:
       max_block_duration: 5m       # this much time passes 
   serviceMonitor:
     enabled: true
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: dedicated
+            operator: In
+            values:
+            - infrastructure
+  tolerations:
+    - effect: NoSchedule
+      key: dedicated
+      operator: Equal
+      value: infrastructure
