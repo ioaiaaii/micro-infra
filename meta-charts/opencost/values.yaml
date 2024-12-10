@@ -15,14 +15,13 @@ opencost:
           valueFrom:
             secretKeyRef:
               name: opencost-cloudprovider-api-key
-              key: cloudProviderApiKey     
+              key: cloudProviderApiKey      
       resources:
         limits:
-          cpu: 10m
           memory: 250Mi
         requests:
-          cpu: 1m
-          memory: 50Mi                  
+          cpu: 10m
+          memory: 50Mi              
     metrics:
       kubeStateMetrics:
         emitKsmV1Metrics: false
