@@ -34,3 +34,8 @@ cluster-autoscaler:
     requests:
       cpu: 5m
       memory: 50Mi
+  serviceMonitor:
+    enabled: true
+    interval: 30s
+    selector:
+      release: kube-prometheus-stack    
