@@ -23,7 +23,7 @@ EOF
 }
 
 terraform {
-  source = "git::https://github.com/ioaiaaii/ioaiaaii.net.git//deploy/iac?ref=v1.1.8"
+  source = "git::https://github.com/ioaiaaii/ioaiaaii.net.git//deploy/iac?ref=v1.1.10"
 }
 
 inputs = {
