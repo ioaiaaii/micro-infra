@@ -1,0 +1,28 @@
+{{ $files := .Files.Glob (include "monitoring.rulesPath" $ ) }}
+{{ if $files }}
+apiVersion: v1
+kind: List
+metadata:
+  name: {{ include "monitoring.name" $ }}-additional-prometheus-rules-list
+  namespace: {{ template "monitoring.namespace" $ }}
+items:
+{{ range $path, $fileContents := $files }}
+{{- $sha := $.Files.Get $path | toYaml | sha256sum }}
+{{- if not (regexMatch "_test\\.yml$" $path) }}
+{{- $ruleName := regexReplaceAll "(^.*/)(.*/)(.*)\\.yml$" $path "${3}" }}
+{{- $ruleSpec := $.Files.Get $path | nindent 6 }}
+  - apiVersion: monitoring.coreos.com/v1
+    kind: PrometheusRule
+    metadata:
+      name: {{ printf "%s-%s" (include "monitoring.name" $) $ruleName | trunc 63 | trimSuffix "-" }}
+      namespace: {{ template "monitoring.namespace" $ }}
+      annotations:
+        rule/checksum: {{ $sha }}
+        rule/file: {{ printf "%s" $path }}
+      labels:
+        {{- include "monitoring.labels" $ | indent 8 }}
+    spec:
+      {{ $ruleSpec }}
+{{- end }}
+{{- end }}
+{{- end }}
