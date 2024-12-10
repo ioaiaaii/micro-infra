@@ -38,4 +38,5 @@ cluster-autoscaler:
     enabled: true
     interval: 30s
     selector:
-      release: kube-prometheus-stack    
+      release: kube-prometheus-stack
+    namespace: observability
