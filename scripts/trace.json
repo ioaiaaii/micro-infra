@@ -1,0 +1,34 @@
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "new-test-service" }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "spans": [
+            {
+              "traceId": "1234567890abcdef1234567890abcdef",
+              "spanId": "abcdef1234567890",
+              "name": "new-test-span",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": 1672531200000000000,
+              "endTimeUnixNano": 1672531205000000000,
+              "attributes": [
+                {
+                  "key": "test.attribute",
+                  "value": { "stringValue": "new-value" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

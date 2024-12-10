@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sample-metrics
+spec:
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      ttlSecondsAfterFinished: 3600
+      template:
+        spec:
+          containers:
+          - name: traces
+            image: ghcr.io/open-telemetry/opentelemetry-collector-contrib/telemetrygen:v0.96.0
+            args:
+              - metrics
+              - --otlp-insecure
+              - --rate
+              - "20"
+              - --duration
+              - 5s
+              - --otlp-endpoint
+              - otel-collector.observability.svc.cluster.local:4317
+          restartPolicy: Never
+
