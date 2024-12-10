@@ -14,8 +14,8 @@ ingress-nginx:
       limits:
         memory: 200Mi
       requests:
-        cpu: 5m
-        memory: 100Mi
+        cpu: 25m
+        memory: 150Mi
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -25,6 +25,13 @@ ingress-nginx:
               operator: In
               values:
               - infrastructure
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: controller
+              app.kubernetes.io/instance: ingress-nginx              
+          topologyKey: kubernetes.io/hostname              
     tolerations:
       - effect: NoSchedule
         key: dedicated
